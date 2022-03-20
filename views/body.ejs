@@ -1,0 +1,16 @@
+<form id="uploadForm" method="POST" action="/upload" enctype="multipart/form-data">
+    <div class="mx-auto w-50">
+        <div class="mb-5 row d-flex mx-auto" style="margin-top: 10em;">
+            <label for="formFile" class="form-label">Default file input example</label>
+            <input class="form-control" type="file" id="formFile" name="formFile">
+        </div>
+        <input type="submit" class="center btn btn-primary w-100" value="Upload File" name="submit">
+    </div>
+</form>
+<% if (locals.success&& locals.success===true) {%>
+    <div class="alert alert-success w-50 mx-auto" style="margin-top: 2em;" role="alert">
+        Upload success. Click button to <a onclick="DownloadExcel('<%=locals.data.docs%>','result.xlsx')"
+            class="downloadLink alert-link">DOWNLOAD
+            FILE</a>
+    </div>
+    <% } %>
