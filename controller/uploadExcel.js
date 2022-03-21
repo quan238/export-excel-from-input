@@ -30,6 +30,9 @@ export async function uploadFile(req, res, next) {
         const outputDataWithNull = jsonData.map((item, key) => {
             // console.log(Object.keys(item)[0])
             const findKey = fieldExcel.find((itemFind) => {
+                if (Array.isArray(itemFind['inputField'])) {
+                    return itemFind['inputField'].includes(Object.keys(item)[0])
+                }
                 return itemFind['inputField'] === Object.keys(item)[0] ? true : false
             })
             if (!findKey) {

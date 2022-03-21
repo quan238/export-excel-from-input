@@ -146,12 +146,12 @@ export const fieldExcel = [
     },
     {
         id: 30,
-        inputField: "KSNK",
+        inputField: ["TLTT-KSNK", "KSNK"],
         outputField: "Kiểm soát nhiễm khuẩn"
     },
     {
         id: 31,
-        inputField: "Sinh hóa",
+        inputField: ["Sinh hóa", "Sinh hóa D"],
         outputField: "Sinh hóa"
     },
     {
@@ -240,7 +240,7 @@ export const fieldExcel = [
     },
     {
         id: 49,
-        inputField: null,
+        inputField: "Gamma-Knife",
         outputField: "Gamma-Knife"
     },
     {
@@ -354,7 +354,7 @@ export const fieldExcel = [
         outputField: "Quản lý dự án"
     }, {
         id: 72,
-        inputField: null,
+        inputField: 'QLDA-CR2',
         outputField: "Quản lý dự án - Chợ Rẫy 2"
     },
     {
@@ -369,12 +369,12 @@ export const fieldExcel = [
     },
     {
         id: 75,
-        inputField: null,
+        inputField: 'CTXH',
         outputField: "Công tác xã hội"
     },
     {
         id: 76,
-        inputField: null,
+        inputField: 'ĐV đấu thầu',
         outputField: "Đơn vị đấu thầu"
     },
     {
@@ -384,12 +384,12 @@ export const fieldExcel = [
     },
     {
         id: 78,
-        inputField: null,
+        inputField: 'QLCL',
         outputField: "Quản lý chất lượng"
     },
     {
         id: 79,
-        inputField: null,
+        inputField: 'TTBYT',
         outputField: "Trang thiết bị y tế"
     },
     {
