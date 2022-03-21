@@ -16,5 +16,5 @@ export function mapArrayWithKey(arr, key) {
 }
 
 export function connect(arr) {
-    return { [arr[0].toString()]: arr[1] };
+    return { [arr[0].toString().replace(/\s{2,}/g, ' ').trim()]: arr[1] };
 }

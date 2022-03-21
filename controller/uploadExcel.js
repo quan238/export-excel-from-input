@@ -5,6 +5,7 @@ import { mapArrayWithKey } from '../util/preSequelize.js';
 import tempfile from 'tempfile';
 const INPUT_FIELD_ARRAY = mapArrayWithKey(fieldExcel, 'inputField')
 const OUTPUT_FIELD_ARRAY = mapArrayWithKey(fieldExcel, 'outputField')
+
 export async function uploadFile(req, res, next) {
     // var body = {
     //     file: req.file.buffer,
@@ -19,8 +20,6 @@ export async function uploadFile(req, res, next) {
         await wb.xlsx.readFile(req.file.path)
         let ws = await wb.getWorksheet("Sheet1")
         ws.eachRow(function (row, rowNumber, index) {
-            // console.log(rowNumber)
-            // console.log(row)
             if (rowNumber === 1) {
                 return
             }
@@ -28,10 +27,9 @@ export async function uploadFile(req, res, next) {
             jsonData = [...jsonData, data]
         })
         const outputDataWithNull = jsonData.map((item, key) => {
-            // console.log(Object.keys(item)[0])
             const findKey = fieldExcel.find((itemFind) => {
                 if (Array.isArray(itemFind['inputField'])) {
-                    return itemFind['inputField'].includes(Object.keys(item)[0])
+                    return itemFind['inputField'].includes(Object.keys(item)[0]) ? true : false
                 }
                 return itemFind['inputField'] === Object.keys(item)[0] ? true : false
             })
@@ -41,7 +39,13 @@ export async function uploadFile(req, res, next) {
 
             return { [findKey.outputField]: Object.values(item)[0], id: findKey.id }
         })
-        const outputData = outputDataWithNull.filter((item) => item)
+        const result = outputDataWithNull.filter((item) => item)
+        let outputData = result.reduce((a, c) => {
+            let x = a.find(e => e.id === c.id)
+            if (!x) a.push(Object.assign({}, c))
+            else x[Object.keys(x)[0]] += c[Object.keys(c)[0]]
+            return a
+        }, [])
         fieldExcel.forEach((item, key) => {
             if (outputData.filter((i) => i.id === item.id).length > 0) {
                 return true;
@@ -50,7 +54,7 @@ export async function uploadFile(req, res, next) {
             }
         })
         outputData.sort((a, b) => a?.id - b?.id)
-
+        console.log(outputData)
         let writeWb = new ExcelJS.Workbook();
         const writeWorkSheet = writeWb.addWorksheet('result')
         const row = writeWorkSheet.getRow(1);
