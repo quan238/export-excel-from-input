@@ -51,4 +51,5 @@ logs
 .env
 
 data
+uploads/
 uploads

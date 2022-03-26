@@ -12,13 +12,17 @@ export async function uploadFile(req, res, next) {
     //     type: req.body.type
     // }
     try {
+        console.log(req.file)
         if (!req.file?.path) {
-            return res.send('Return and update file again!!')
+            return res.status(400).json({ msg: 'Return and update file again!!' })
         }
         let jsonData = [];
         let wb = new ExcelJS.Workbook();
         await wb.xlsx.readFile(req.file.path)
         let ws = await wb.getWorksheet("Sheet1")
+        if (!ws) {
+            throw new Error("Sheet not found")
+        }
         ws.eachRow(function (row, rowNumber, index) {
             if (rowNumber === 1) {
                 return
@@ -79,20 +83,14 @@ export async function uploadFile(req, res, next) {
             column.width = maxLength < 10 ? 10 : maxLength;
         });
 
-        const buffer = await writeWb.xlsx.writeBuffer()
-        const base64 = Buffer.from(buffer).toString('base64')
-        // response.end();
-        return res.render('../views/index.ejs', {
-            success: true,
-            data: {
-                docs: base64
-            }
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        res.setHeader("Content-Disposition", "attachment; filename=" + "Result.xlsx");
+        await writeWb.xlsx.write(res).then(function () {
+            res.end();
         })
     }
     catch (error) {
         console.log(error)
-        return res.send('Return and update file again!!', {
-            success: false
-        })
+        return res.status(400).json({ msg: 'Return and update file again!!' })
     }
 }

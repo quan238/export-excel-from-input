@@ -2,22 +2,23 @@ import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 import bodyParser from 'body-parser'
-import { uploadFile } from './controller/uploadExcel.js';
-import multer from 'multer'
+import router from './routes/index.js';
 
-const upload = multer({ dest: 'uploads/' });
 const app = express();
 app.use(express.static('./public'));
-app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(bodyParser.json({ limit: "10mb" }));
+app.use(
+  bodyParser.urlencoded({
+    limit: "10mb",
+    extended: true,
+    parameterLimit: 50000,
+  })
+);
 // set the view engine to ejs
-app.set('views', './views');
-app.set('view engine', 'ejs');
+// app.set('views', './views');
+// app.set('view engine', 'ejs');
 app.use(cors());
-app.get('/', (req, res) => {
-  res.render('index');
-});
-app.post('/upload', upload.single('formFile'), uploadFile);
+app.use('/api', router);
 
 app.listen(process.env.PORT, () =>
   console.log(`

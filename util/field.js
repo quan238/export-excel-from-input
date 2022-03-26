@@ -1,4 +1,4 @@
-const field = [
+export const field = [
     {
         inputField: "BGĐ",
         outputField: "Ban Giám Đốc"
@@ -325,4 +325,37 @@ const field = [
 
 export const fieldExcel = field.map((item, key) => {
     return { ...item, id: key + 1 }
+})
+
+
+const fieldExcelForProcessOne = [
+    { id: 1, key: "timeStamp" },
+    { id: 2, key: "clinic" },
+    { id: 3, key: "otherClinic" },
+    { id: 4, key: "dateReport" },
+    { id: 5, key: "changeInfectedNumber" },
+    { id: 6, key: "newInfected" },
+    { id: 7, key: "noteNewInfected" },
+    { id: 8, key: "recoverInfectedNumber" },
+    { id: 9, key: "noteRecoverInfected" },
+    { id: 10, key: "reporter" },
+]
+
+export const outputProcess1 = [
+    { id: 1, key: 'index', output: 'STT' },
+    { id: 2, key: 'name', output: 'Họ tên' },
+    { id: 3, key: 'gender', output: 'Giới tính' },
+    { id: 4, key: 'dateOfBirth', output: 'Năm sinh' },
+    { id: 5, key: 'job', output: 'Nghề nghiệp' },
+    { id: 6, key: 'phone', output: 'SĐT' },
+    { id: 7, key: 'clinic', output: 'Khoa/ phòng' },
+    { id: 8, key: 'datePositive', output: 'Ngày XN dương tính' },
+    { id: 9, key: 'rangeTreatment', output: 'Số ngày điều trị' },
+    { id: 10, key: 'symptom', output: 'Triệu chứng' },
+    { id: 11, key: 'infectedFrom', output: 'Nguồn nghi nhiễm' },
+    { id: 12, key: 'workingStatus', output: 'Đi làm lại' }
+]
+
+export const fieldProcessOne = fieldExcelForProcessOne.map((item, key) => {
+    return item["key"]
 })
